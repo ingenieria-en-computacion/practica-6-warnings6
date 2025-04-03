@@ -24,7 +24,7 @@ int main() {
     list_int_append(nums, 20);
     
     printf("Lista: ");
-    list_int_print(nums, print_int); // Usar función concreta para evitar errores
+    list_int_print(nums, print_int);
     
     list_int_destroy(nums);
     

@@ -37,6 +37,7 @@ START_TEST(test_append_and_length) {
     ck_assert_uint_eq(list_int_length(list), 2);
     
     list_int_destroy(list);
+    list = NULL;
     ck_assert_ptr_null(list);
 }
 END_TEST
