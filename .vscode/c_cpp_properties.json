@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "name": "windows-gcc-x64",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/msys64/mingw64/include"  // Asegúrate de que esta sea la ruta correcta
+            ],
+            "compilerPath": "C:/mingw64/bin/gcc.exe", // Ajusta la ruta de tu compilador si es necesario
+            "cStandard": "c11",  // O usa el estándar que prefieras
+            "cppStandard": "c++17",  // O usa el estándar que prefieras
+            "intelliSenseMode": "windows-gcc-x64"
+        }
+    ],
+    "version": 4
+}

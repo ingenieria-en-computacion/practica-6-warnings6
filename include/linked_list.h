@@ -1,4 +1,4 @@
-pragma once
+#pragma once
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -70,8 +70,8 @@ pragma once
     bool list_##TYPE##_insert(List_##TYPE* list, TYPE data, size_t pos) { \
         if (!list || pos > list->length) return false; \
         \
-        Node_##TYPE* new_node = node_##TYPE##_create(data); \
-        if (!new_node) return false; \        
+        Node_##TYPE* new_node = node_##TYPE##__create(data); \
+        if(!new_node)return false;\        
         \
         if (pos == 0) { \
             new_node->next = list->head; \
