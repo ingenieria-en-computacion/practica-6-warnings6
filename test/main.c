@@ -1,14 +1,11 @@
 #include <stdio.h>
-#include "circularqueue.h"
-#include "biqueue.h"
+#include "../include/circularqueue.h"
+#include "../include/biqueue.h"
 
-void test_circular_queue() {
-    printf("=== Pruebas para la Cola Circular ===\n");
-
+int main() {
     CQueue *cqueue = cqueue_create();
     if (!cqueue) {
         printf("Error al crear la cola circular.\n");
-        return;
     }
 
     cqueue_enqueue(cqueue, 'A');
@@ -30,15 +27,12 @@ void test_circular_queue() {
 
     cqueue_destroy(cqueue);
     printf("Cola circular destruida.\n");
-}
 
-void test_biqueue() {
     printf("\n=== Pruebas para la Bicola ===\n");
 
     BQueue *biqueue = biqueue_create();
     if (!biqueue) {
         printf("Error al crear la bicola.\n");
-        return;
     }
 
     biqueue_enqueue_front(biqueue, 'X');
@@ -61,10 +55,6 @@ void test_biqueue() {
     // Vaciar la bicola
     biqueue_destroy(biqueue);
     printf("Bicola destruida.\n");
-}
 
-int main() {
-    test_circular_queue();
-    test_biqueue();
     return 0;
 }

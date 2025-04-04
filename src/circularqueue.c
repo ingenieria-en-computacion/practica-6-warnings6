@@ -1,4 +1,4 @@
-#include "circularqueue.h"
+#include "../include/circularqueue.h"
 #include <stdio.h>
 #include <stdlib.h>
 

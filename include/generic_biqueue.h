@@ -27,6 +27,7 @@
     bool Biqueue_##TYPE##_dequeue_front(Biqueue_##TYPE* queue, TYPE* out); \
     bool Biqueue_##TYPE##_dequeue_back(Biqueue_##TYPE* queue, TYPE* out); \
     bool Biqueue_##TYPE##_is_empty(const Biqueue_##TYPE* queue); \
+    void Biqueue_##TYPE##_print(const Biqueue_##TYPE* queue, void (*print_func)(TYPE)); \
     size_t Biqueue_##TYPE##_length(const Biqueue_##TYPE* queue);
 
 // ----------------------------
@@ -110,14 +111,25 @@
     \
     size_t Biqueue_##TYPE##_length(const Biqueue_##TYPE* queue) { \
         return queue->length; \
+    } \
+    void Biqueue_##TYPE##_print(const Biqueue_##TYPE* queue, void (*print_func)(TYPE)) { \
+        if (!queue || !print_func) return; \
+        Node_##TYPE* current = queue->head; \
+        while (current) { \
+            print_func(current->data); \
+            current = current->next; \
+        } \
+        printf("\n"); \
     }
 // Declaración para tipos concretos
 DECLARE_GENERIC_BIQUEUE(int)
 DECLARE_GENERIC_BIQUEUE(float)
+DECLARE_GENERIC_BIQUEUE(char)
 
 // Implementación para tipos concretos
 #define BIQUEUE_IMPLEMENTATION
 #ifdef BIQUEUE_IMPLEMENTATION
 IMPLEMENT_GENERIC_BIQUEUE(int)
 IMPLEMENT_GENERIC_BIQUEUE(float)
+IMPLEMENT_GENERIC_BIQUEUE(char)
 #endif
