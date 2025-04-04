@@ -1,5 +1,5 @@
-#ifndef BIQUEUE_H
-#define BIQUEUE_H
+#ifndef __BIQUEUE_H__
+#define __BIQUEUE_H__
 
 #include <stdbool.h>
 
