@@ -8,7 +8,7 @@ CQueue *cqueue_create() {
         return NULL;
     }
     newQueue->front = -1;
-    newQueue->rear = -1;
+    newQueue->last = -1;
     newQueue->len = 0;
     return newQueue;
 }
@@ -24,11 +24,11 @@ void cqueue_enqueue(CQueue *q, char d) {
     }
     if (q->front == -1) {
         // Primera inserción
-        q->front = q->rear = 0;
+        q->front = q->last = 0;
     } else {
-        q->rear = (q->rear + 1) % MAX_SIZE;
+        q->last = (q->last + 1) % MAX_SIZE;
     }
-    q->data[q->rear] = d;
+    q->data[q->last] = d;
     q->len++;
 }
 
@@ -37,8 +37,8 @@ void cqueue_dequeue(CQueue *q) {
         printf("Error: La cola está vacía.\n");
         return;
     }
-    if (q->front == q->rear) {
-        q->front = q->rear = -1;
+    if (q->front == q->last) {
+        q->front = q->last = -1;
     } else {
         q->front = (q->front + 1) % MAX_SIZE;
     }
@@ -58,7 +58,7 @@ char cqueue_last(CQueue *q) {
         printf("Error: La cola está vacía.\n");
         return '\0';
     }
-    return q->data[q->rear];
+    return q->data[q->last];
 }
 
 bool cqueue_is_empty(CQueue *q) {
@@ -71,7 +71,7 @@ bool cqueue_is_full(CQueue *q) {
 
 void cqueue_empty(CQueue *q) {
     q->front = -1;
-    q->rear = -1;
+    q->last = -1;
     q->len = 0;
 }
 

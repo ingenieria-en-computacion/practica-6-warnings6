@@ -9,7 +9,7 @@ BQueue *biqueue_create() {
         return NULL;
     }
     biqueue->front = -1;
-    biqueue->back = -1;
+    biqueue->last = -1;
     biqueue->len = 0;
     return biqueue;
 }
@@ -32,7 +32,7 @@ void biqueue_enqueue_front(BQueue *biqueue, char d) {
         return;
     }
     if (biqueue->front == -1) {
-        biqueue->front = biqueue->back = 0;
+        biqueue->front = biqueue->last = 0;
     } else {
         biqueue->front = (biqueue->front - 1 + MAX_SIZE) % MAX_SIZE;
     }
@@ -45,12 +45,12 @@ void biqueue_enqueue_back(BQueue *biqueue, char d) {
         printf("Error: La bicola está llena.\n");
         return;
     }
-    if (biqueue->back == -1) {
-        biqueue->front = biqueue->back = 0;
+    if (biqueue->last == -1) {
+        biqueue->front = biqueue->last = 0;
     } else {
-        biqueue->back = (biqueue->back + 1) % MAX_SIZE;
+        biqueue->last = (biqueue->last + 1) % MAX_SIZE;
     }
-    biqueue->data[biqueue->back] = d;
+    biqueue->data[biqueue->last] = d;
     biqueue->len++;
 }
 
@@ -59,8 +59,8 @@ void biqueue_dequeue_front(BQueue *biqueue) {
         printf("Error: La bicola está vacía.\n");
         return;
     }
-    if (biqueue->front == biqueue->back) {
-        biqueue->front = biqueue->back = -1;
+    if (biqueue->front == biqueue->last) {
+        biqueue->front = biqueue->last = -1;
     } else {
         biqueue->front = (biqueue->front + 1) % MAX_SIZE;
     }
@@ -72,10 +72,10 @@ void biqueue_dequeue_back(BQueue *biqueue) {
         printf("Error: La bicola está vacía.\n");
         return;
     }
-    if (biqueue->front == biqueue->back) {
-        biqueue->front = biqueue->back = -1;
+    if (biqueue->front == biqueue->last) {
+        biqueue->front = biqueue->last = -1;
     } else {
-        biqueue->back = (biqueue->back - 1 + MAX_SIZE) % MAX_SIZE;
+        biqueue->last = (biqueue->last - 1 + MAX_SIZE) % MAX_SIZE;
     }
     biqueue->len--; 
 }
@@ -93,7 +93,7 @@ char biqueue_last(BQueue *biqueue) {
         printf("Error: La bicola está vacía.\n");
         return '\0';
     }
-    return biqueue->data[biqueue->back];
+    return biqueue->data[biqueue->last];
 }
 
 void biqueue_print(BQueue *biqueue) {

@@ -8,7 +8,7 @@
 typedef struct {
     char data[MAX_SIZE];
     int front;
-    int back;
+    int last;
     int len;
 } BQueue;
 

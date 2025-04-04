@@ -9,7 +9,7 @@
 typedef struct {
     char data[MAX_SIZE];
     int front;
-    int rear;
+    int last;
     int len;
 } CQueue;
 
