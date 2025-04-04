@@ -9,32 +9,30 @@
     typedef struct CNode_##TYPE { \
         TYPE data; \
         struct CNode_##TYPE* next; \
-        struct CNode_##TYPE* prev;  \
+        struct CNode_##TYPE* prev; \
     } CNode_##TYPE; \
-    CNode_##TYPE* cnode_##TYPE##__create(TYPE); \
-    CNode_##TYPE* cnode_##TYPE##_destroy(CNode_##TYPE*); \
     \
-    typedef struct { \
+    typedef struct CQueue_##TYPE { \
         CNode_##TYPE* head; \
         CNode_##TYPE* tail; \
         size_t length; \
     } CQueue_##TYPE; \
     \
     CQueue_##TYPE* CQueue_##TYPE##_create(void); \
-    void CQueue_##TYPE##_destroy(CQueue_##TYPE*); \
-    bool CQueue_##TYPE##_enqueue(CQueue_##TYPE*, TYPE data); \
-    bool CQueue_##TYPE##_dequeue(CQueue_##TYPE*, TYPE* out); \
+    void CQueue_##TYPE##_destroy(CQueue_##TYPE* queue); \
+    bool CQueue_##TYPE##_enqueue(CQueue_##TYPE* queue, TYPE data); \
+    bool CQueue_##TYPE##_dequeue(CQueue_##TYPE* queue, TYPE* out); \
     bool CQueue_##TYPE##_is_empty(const CQueue_##TYPE* queue); \
     size_t CQueue_##TYPE##_length(const CQueue_##TYPE* queue); \
     void CQueue_##TYPE##_print(const CQueue_##TYPE* queue, void (*print_fn)(TYPE)); \
     void CQueue_##TYPE##_clear(CQueue_##TYPE* queue);
 
 // ----------------------------
-// Macro para implementación
+// Macro para implementar funciones
 // ----------------------------
 #define IMPLEMENT_GENERIC_CIRCULAR_QUEUE(TYPE) \
-    Node_##TYPE* node_##TYPE##__create(TYPE data) { \
-        Node_##TYPE* new_node = malloc(sizeof(Node_##TYPE)); \
+    CNode_##TYPE* cnode_##TYPE##__create(TYPE data) { \
+        CNode_##TYPE* new_node = malloc(sizeof(CNode_##TYPE)); \
         new_node->data = data; \
         new_node->next = new_node->prev = NULL; \
         return new_node; \
@@ -50,9 +48,9 @@
     \
     void CQueue_##TYPE##_destroy(CQueue_##TYPE* queue) { \
         if (!queue) return; \
-        Node_##TYPE* current = queue->head; \
+        CNode_##TYPE* current = queue->head; \
         while (current) { \
-            Node_##TYPE* temp = current; \
+            CNode_##TYPE* temp = current; \
             current = current->next; \
             free(temp); \
             if (current == queue->head) break; \
@@ -62,7 +60,7 @@
     \
     bool CQueue_##TYPE##_enqueue(CQueue_##TYPE* queue, TYPE data) { \
         if (!queue) return false; \
-        Node_##TYPE* new_node = node_##TYPE##__create(data); \
+        CNode_##TYPE* new_node = cnode_##TYPE##__create(data); \
         if (!new_node) return false; \
         if (!queue->head) { \
             queue->head = queue->tail = new_node; \
@@ -80,7 +78,7 @@
     \
     bool CQueue_##TYPE##_dequeue(CQueue_##TYPE* queue, TYPE* out) { \
         if (!queue || queue->length == 0) return false; \
-        Node_##TYPE* to_delete = queue->head; \
+        CNode_##TYPE* to_delete = queue->head; \
         if (out) *out = to_delete->data; \
         if (queue->head == queue->tail) { \
             queue->head = queue->tail = NULL; \
@@ -104,7 +102,7 @@
     \
     void CQueue_##TYPE##_print(const CQueue_##TYPE* queue, void (*print_fn)(TYPE)) { \
         if (!queue || queue->length == 0) return; \
-        Node_##TYPE* current = queue->head; \
+        CNode_##TYPE* current = queue->head; \
         do { \
             print_fn(current->data); \
             current = current->next; \
@@ -130,9 +128,7 @@ DECLARE_GENERIC_CIRCULAR_QUEUE(float)
 // Implementación para tipos concretos
 // ----------------------------
 #ifdef GENERIC_CIRCULAR_QUEUE_IMPLEMENTATION
-#define GENERIC_CIRCULAR_QUEUE_IMPLEMENTATION
 IMPLEMENT_GENERIC_CIRCULAR_QUEUE(int)
 IMPLEMENT_GENERIC_CIRCULAR_QUEUE(char)
 IMPLEMENT_GENERIC_CIRCULAR_QUEUE(float)
 #endif
-
